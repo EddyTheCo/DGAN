@@ -42,6 +42,18 @@ class DGANImpl : public torch::nn::Module {
 
            return x;
         }
+	int64_t get_numel(void)const
+        {
+            int64_t sum=0;
+            for(auto mod:module_cont)
+            {
+                for (auto param:mod->parameters())
+                {
+                    sum+=param.numel();
+                }
+            }
+            return sum;
+        }
         const int64_t input_size,output_size;
 	const double dropout_,leaky_relu_;
     private:
