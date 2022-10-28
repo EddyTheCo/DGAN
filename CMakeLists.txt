@@ -8,22 +8,24 @@ include(FetchContent)
 add_library(DGAN INTERFACE include/custom-modules/dgan.hpp)
 
 if(USE_YAML)
-	target_compile_definitions(DGAN PUBLIC USE_YAML)
-	find_package(YAML-CPP CONFIG QUIET)
-	if(NOT YAML-CPP_FOUND)
-		message(STATUS "YAML-CPP was not found. Downloading")
+	target_compile_definitions(DGAN INTERFACE USE_YAML)
+	if(NOT TARGET yaml-cpp)
+		find_package(YAML-CPP CONFIG QUIET)
+		if(NOT YAML-CPP_FOUND)
+			message(STATUS "YAML-CPP was not found. Downloading")
 
-		FetchContent_Declare(
-			yaml-cpp
-			GIT_REPOSITORY git@github.com:jbeder/yaml-cpp.git
-			GIT_TAG yaml-cpp-0.7.0
-			)
-		FetchContent_MakeAvailable(yaml-cpp)
-		install(TARGETS yaml-cpp EXPORT ${PROJECT_NAME}Targets DESTINATION lib)
-		target_link_libraries(DGAN PRIVATE  yaml-cpp)
-	else()
-		message(STATUS "YAML FOUND in ${YAML-CPP_DIR}")
-	endif(NOT YAML-CPP_FOUND)
+			FetchContent_Declare(
+				yaml-cpp
+				GIT_REPOSITORY git@github.com:jbeder/yaml-cpp.git
+				GIT_TAG yaml-cpp-0.7.0
+				)
+			FetchContent_MakeAvailable(yaml-cpp)
+			install(TARGETS yaml-cpp EXPORT ${PROJECT_NAME}Targets DESTINATION lib)
+			target_link_libraries(DGAN PRIVATE  yaml-cpp)
+		else()
+			message(STATUS "YAML FOUND in ${YAML-CPP_DIR}")
+		endif(NOT YAML-CPP_FOUND)
+	endif(NOT TARGET yaml-cpp)
 endif(USE_YAML)
 
 
