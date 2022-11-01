@@ -5,7 +5,7 @@ project(DGAN_module VERSION 0.1 DESCRIPTION "a ML-torch module for use as a disc
 find_package(Torch REQUIRED)
 
 include(FetchContent)
-add_library(DGAN INTERFACE include/custom-modules/dgan.hpp)
+add_library(DGAN INTERFACE)
 
 if(USE_YAML)
 	target_compile_definitions(DGAN INTERFACE USE_YAML)
