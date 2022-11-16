@@ -25,7 +25,7 @@ if(USE_YAML)
 			message(STATUS "YAML FOUND in ${YAML-CPP_DIR}")
 		endif(NOT YAML-CPP_FOUND)
 	endif(NOT TARGET yaml-cpp)
-	target_link_libraries(DGAN PRIVATE  yaml-cpp)
+	target_link_libraries(DGAN INTERFACE  yaml-cpp)
 endif(USE_YAML)
 
 
